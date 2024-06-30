@@ -33,9 +33,9 @@ const Home = () => {
               { image: require('../assets/dress3.png'), title: 'lame', description: 'reversible angora cardigan', price: '$120' },
             ].map((item, index) => (
               <View key={index} style={styles.card}>
-                <View>
+                <View style={styles.imageContainer}>
                 <Image source={item.image} style={styles.image} />
-                <TouchableOpacity style={styles.button}>
+                <TouchableOpacity style={styles.addbutton}>
                   <Image source={require('../assets/add_circle.png')}/>
                 </TouchableOpacity>
                 </View>
@@ -93,10 +93,20 @@ const styles = StyleSheet.create({
     flexWrap: 'wrap',
     justifyContent: 'space-between',
   },
-
-  image: {
+  imageContainer: {
+    position: 'relative',
     width: '100%',
     height: 150,
+  },
+  image: {
+    width: '100%',
+    height: '100%',
+  },
+  addbutton: {
+    position: 'absolute',
+    bottom: 0,
+    right: 0,
+    padding: 8,
   },
   title: {
     fontSize: 16,
