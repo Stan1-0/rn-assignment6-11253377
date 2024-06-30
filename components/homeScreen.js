@@ -21,6 +21,15 @@ const Home = () => {
         </View>
         <View style={styles.section}>
           <Text style={styles.subtitle}>OUR STORY</Text>
+          <View style={styles.icons}>
+            <TouchableOpacity style={styles.button}>
+            <Image source={require('../assets/Listview.png')}/>
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.button}>
+            <Image source={require('../assets/Filter.png')}/>
+            </TouchableOpacity>
+          </View>
+        </View>
           <View style={styles.grid}>
             {[
               { image: require('../assets/dress1.png'), title: 'Office Wear', description: 'reversible angora cardigan', price: '$120' },
@@ -46,7 +55,7 @@ const Home = () => {
               </View>
             ))}
           </View>
-        </View>
+        
       </View>
       </ScrollView>
     </SafeAreaView>
@@ -57,7 +66,7 @@ const Home = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#f0f0f0',
+    backgroundColor: '#FFFFFF',
     padding: 16,
   },
   scrollViewContainer: {
@@ -81,6 +90,9 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
   },
   section: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
     padding: 16,
   },
   subtitle: {
@@ -92,16 +104,13 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     flexWrap: 'wrap',
     justifyContent: 'space-between',
+    padding: 16,
   },
   imageContainer: {
     position: 'relative',
-    width: '100%',
-    height: 150,
+    
   },
-  image: {
-    width: '100%',
-    height: '100%',
-  },
+  
   addbutton: {
     position: 'absolute',
     bottom: 0,
