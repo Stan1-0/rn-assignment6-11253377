@@ -104,7 +104,8 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     flexWrap: 'wrap',
     justifyContent: 'space-between',
-    padding: 16,
+    padding: 10,
+    gap: 10,
   },
   imageContainer: {
     position: 'relative',
@@ -123,8 +124,12 @@ const styles = StyleSheet.create({
     marginBottom: 8,
   },
   description: {
-    fontSize: 14
+    fontSize: 14,
+    color: '#676767',
   },
+  price:{
+    color: '#dd8560'
+  }
 }
 );
 
