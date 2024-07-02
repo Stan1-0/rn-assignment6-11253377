@@ -1,6 +1,39 @@
 import { StyleSheet, Text, View, Image, TouchableOpacity, SafeAreaView, ScrollView } from "react-native";
+import React, {useState, useEffect} from "react";
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
-const Home = () => {
+const Home = ({navigation}) => {
+  const [items, setItems] = useState([]);
+  const [selectedItems, setSelectedItems] = useState([]);
+
+  useEffect(() => {
+    fetchItems();}, []
+  );
+
+  const fetchItems = async () => {
+
+  };
+
+  const toggleSelection = (itemId) => {
+    setSelectedItems(prevSelectedItems =>
+      prevSelectedItems.includes(itemId) ?
+      prevSelectedItems.filter(id => id!== itemId):
+      [...prevSelectedItems, itemId]
+    );
+  };
+
+  const saveSelectedItems = async () => {
+    try{
+      await AsyncStorage.setItem('@selectedItems', JSON.stringify(selectedItems));
+    } catch (error) {
+      console.log('Error saving selected items:', error);
+    }
+  };
+
+  const checkout = () => {
+    navigation.navigate("Checkout", {items: selectedItems});
+  };
+
   return (
     <SafeAreaView>
       <ScrollView style={styles.scrollViewContainer}>
@@ -14,7 +47,7 @@ const Home = () => {
             <TouchableOpacity style={styles.button}>
               <Image source={require('../assets/Search.png')}/>
             </TouchableOpacity>
-            <TouchableOpacity style={styles.button}>
+            <TouchableOpacity style={styles.button} onPress={checkout}>
               <Image source={require('../assets/shoppingBag.png')}/>
             </TouchableOpacity>
           </View>
@@ -44,7 +77,7 @@ const Home = () => {
               <View key={index} style={styles.card}>
                 <View style={styles.imageContainer}>
                 <Image source={item.image} style={styles.image} />
-                <TouchableOpacity style={styles.addbutton}>
+                <TouchableOpacity style={styles.addbutton} onPress={setSelectedItems}>
                   <Image source={require('../assets/add_circle.png')}/>
                 </TouchableOpacity>
                 </View>
@@ -120,13 +153,15 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 16,
     fontWeight: 'bold',
-    marginBottom: 8,
   },
   description: {
     fontSize: 14,
     color: '#676767',
+    marginBottom: 8,
   },
   price:{
+    fontSize: 16,
+    fontWeight: 'bold',
     color: '#dd8560'
   }
 }
