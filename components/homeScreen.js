@@ -3,32 +3,28 @@ import React, {useState, useEffect} from "react";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const Home = ({navigation}) => {
-  const [items, setItems] = useState([]);
+  
   const [selectedItems, setSelectedItems] = useState([]);
 
   useEffect(() => {
-    fetchItems();}, []
-  );
+    const fetchSelectedItems = async () => {
+      const storedItems = await AsyncStorage.getItem('@selectedItems');
+      setSelectedItems(storedItems? JSON.parse(storedItems) : []);
+    };
+    fetchSelectedItems();
+  }, []);
 
-  const fetchItems = async () => {
+  
 
+  const toggleSelection = async (itemId) => {
+    const updatedItems = selectedItems.includes(itemId)
+     ? selectedItems.filter(id => id!== itemId)
+      : [...selectedItems, itemId];
+    await AsyncStorage.setItem('@selectedItems', JSON.stringify(updatedItems));
+    setSelectedItems(updatedItems);
   };
 
-  const toggleSelection = (itemId) => {
-    setSelectedItems(prevSelectedItems =>
-      prevSelectedItems.includes(itemId) ?
-      prevSelectedItems.filter(id => id!== itemId):
-      [...prevSelectedItems, itemId]
-    );
-  };
-
-  const saveSelectedItems = async () => {
-    try{
-      await AsyncStorage.setItem('@selectedItems', JSON.stringify(selectedItems));
-    } catch (error) {
-      console.log('Error saving selected items:', error);
-    }
-  };
+  
 
   const checkout = () => {
     navigation.navigate("Checkout", {items: selectedItems});
@@ -65,19 +61,19 @@ const Home = ({navigation}) => {
         </View>
           <View style={styles.grid}>
             {[
-              { image: require('../assets/dress1.png'), title: 'Office Wear', description: 'reversible angora cardigan', price: '$120' },
-              { image: require('../assets/dress2.png'), title: 'Black', description: 'reversible angora cardigan', price: '$120' },
-              { image: require('../assets/dress3.png'), title: 'Church Wear', description: 'reversible angora cardigan', price: '$120' },
-              { image: require('../assets/dress4.png'), title: 'Lomere', description: 'reversible angora cardigan', price: '$120' },
-              { image: require('../assets/dress5.png'), title: '2IWN', description: 'reversible angora cardigan', price: '$120' },
-              { image: require('../assets/dress6.png'), title: 'Lopo', description: 'reversible angora cardigan', price: '$120' },
-              { image: require('../assets/dress7.png'), title: '2IWN', description: 'reversible angora cardigan', price: '$120' },
-              { image: require('../assets/dress3.png'), title: 'lame', description: 'reversible angora cardigan', price: '$120' },
-            ].map((item, index) => (
-              <View key={index} style={styles.card}>
+              { id:1, image: require('../assets/dress1.png'), title: 'Office Wear', description: 'reversible angora cardigan', price: '$120' },
+              { id:2, image: require('../assets/dress2.png'), title: 'Black', description: 'reversible angora cardigan', price: '$120' },
+              { id:3, image: require('../assets/dress3.png'), title: 'Church Wear', description: 'reversible angora cardigan', price: '$120' },
+              { id:4, image: require('../assets/dress4.png'), title: 'Lomere', description: 'reversible angora cardigan', price: '$120' },
+              { id:5, image: require('../assets/dress5.png'), title: '2IWN', description: 'reversible angora cardigan', price: '$120' },
+              { id:6, image: require('../assets/dress6.png'), title: 'Lopo', description: 'reversible angora cardigan', price: '$120' },
+              { id:7, image: require('../assets/dress7.png'), title: '2IWN', description: 'reversible angora cardigan', price: '$120' },
+              { id:8, image: require('../assets/dress3.png'), title: 'lame', description: 'reversible angora cardigan', price: '$120' },
+            ].map((item, id) => (
+              <View key={id} style={styles.card}>
                 <View style={styles.imageContainer}>
                 <Image source={item.image} style={styles.image} />
-                <TouchableOpacity style={styles.addbutton} onPress={setSelectedItems}>
+                <TouchableOpacity style={styles.addbutton} key={item.id} onPress={() => toggleSelection(item)}>
                   <Image source={require('../assets/add_circle.png')}/>
                 </TouchableOpacity>
                 </View>
