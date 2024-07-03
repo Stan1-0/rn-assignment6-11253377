@@ -15,6 +15,16 @@ This project is a mobile shopping application designed to provide users with a s
 - **React Native**: A popular framework for building native mobile applications using JavaScript and React.
 - **Expo**: Simplifies the development and deployment of React Native applications.
 - **React Navigation**: Provides a way to navigate between screens in a React Native application.
+- **AsyncStorage**: We use AsyncStorage to save and get things like what items the user has picked out.
+
+## Why AsyncStorage?
+It's easy to use and keeps our stuff safe even when we close the app.
+- Easy: Simple to use.
+- Keeps Going: Stays safe even after you close the app.
+- Smooth: Doesn't block anything while saving or getting stuff.
+
+# How It Works
+When you pick something, we save it in AsyncStorage. When you open the app again, we check AsyncStorage to see what you've picked before.
 
 ## Getting Started
 
